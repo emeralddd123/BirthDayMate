@@ -36,7 +36,7 @@ Getting Started
 Usage
 -----
 
-Visit [http://localhost:3000](http://localhost:3000) in your browser to access the landing page. Sign up, and the app will automatically send birthday wishes to users every day at 7:00 AM.
+Visit [http://localhost:3000](http://localhost:3000) in your browser to access the landing page. Sign up, and the app will automatically send birthday wishes to users on thier birthday at 7:00 AM.
 
 Task Scheduling
 ---------------
