@@ -7,53 +7,59 @@ const User = require('../models/user');
 
 
 async function sendBirthdayWish(email, username) {
-  try {
-    const templatePath = './src/templates/birthdayTemplate.hbs';
-    const template = await fs.readFile(templatePath, 'utf-8');
-    const compiledTemplate = handlebars.compile(template);
+    try {
+        const templatePath = './src/templates/birthdayTemplate.hbs';
+        const template = await fs.readFile(templatePath, 'utf-8');
+        const compiledTemplate = handlebars.compile(template);
 
-    const mailOptions = {
-      from: emailConfig.auth.user,
-      to: email,
-      subject: 'Happy Birthday!',
-      html: compiledTemplate({ username })
-    };
+        const mailOptions = {
+            from: emailConfig.auth.user,
+            to: email,
+            subject: 'Happy Birthday!',
+            html: compiledTemplate({ username })
+        };
 
-    await sendMail(mailOptions);
-    console.log(`Birthday wishes sent to ${username} (${email})`);
-  } catch (error) {
-    console.error('Error sending birthday wish:', error);
-  }
+        await sendMail(mailOptions);
+        console.log(`Birthday wishes sent to ${username} (${email})`);
+    } catch (error) {
+        console.error('Error sending birthday wish:', error);
+    }
 }
 
 async function sendBirthdayWishes() {
-  try {
-    // Get today's date in the format MM-DD
-    const today = new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit' });
+    try {
+        // Get the current date without the time (set hours, minutes, seconds, and milliseconds to zero)
+        const today = new Date();
+        today.setUTCHours(0, 0, 0, 0);
 
-    // Find users with birthdays today
-    const usersWithBirthday = await User.find({ birthday: { $regex: today } });
+        // Get the date for the beginning of the next day
+        const tomorrow = new Date(today);
+        tomorrow.setDate(today.getDate() + 1);
 
-    if (usersWithBirthday.length > 0) {
-      // Compose and send birthday wishes email for each user
-      usersWithBirthday.forEach(async (user) => {
-        await sendBirthdayWish(user.email, user.username);
-      });
-    } else {
-      console.log('No birthdays today.');
+        // Find users with birthdays today
+        const usersWithBirthday = await User.find({
+            birthday: {
+                $gte: today,
+                $lt: tomorrow
+            }
+        });
+
+        if (usersWithBirthday.length > 0) {
+            // Compose and send birthday wishes email for each user
+            for (const user of usersWithBirthday) {
+                await sendBirthdayWish(user.email, user.username);
+            }
+        } else {
+            console.log('No birthdays today.');
+        }
+    } catch (error) {
+        console.error('Error sending birthday wishes:', error);
     }
-  } catch (error) {
-    console.error('Error sending birthday wishes:', error);
-  }
 }
 
 
-// Schedule the function to run every day at 7:00 AM
-cron.schedule('0 7 * * *', () => {
-    console.log('Running birthday wishes cron job...');
-    sendBirthdayWishes();
-});
 
 
-module.exports = { sendBirthdayWish };
+
+module.exports = { sendBirthdayWish, sendBirthdayWishes };
 
