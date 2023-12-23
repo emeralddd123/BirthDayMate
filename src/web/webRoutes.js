@@ -7,6 +7,19 @@ const emailService = require('.././services/emailService')
 
 const webRouter = express.Router();
 
+webRouter.get('/', async (req, res) => {
+	res.sendFile(path.join(__dirname, '../../public', 'index.html'));
+});
+
+
+webRouter.get('/home', async (req, res) => {
+    try {
+        return res.render('home')
+    } catch (error) {
+        res.redirect('/errorPage')
+    }
+})
+
 
 webRouter.get('/signup', async (req, res) => {
     let message

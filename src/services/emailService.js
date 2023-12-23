@@ -1,7 +1,6 @@
 const nodemailer = require('nodemailer')
 require('dotenv').config()
 
-const logger = require('../logger/index')
 
 const websiteURL = process.env.WEBSITE_URL || 'http://localhost:3000'
 
@@ -93,7 +92,8 @@ const sendForgotPasswordMail = async (email, firstname, token) => {
 const emailService = {
     sendMail,
     sendActivationMail,
-    sendForgotPasswordMail
+    sendForgotPasswordMail,
+    emailConfig:config
 }
 
 module.exports = emailService

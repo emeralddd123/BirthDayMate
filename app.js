@@ -8,15 +8,15 @@ const app = express();
 
 
 
-const webRouter = require('./web/webRoutes');
-const apiRouter = require('./api/apiRoutes');
+const webRouter = require('./src/web/webRoutes');
+const apiRouter = require('./src/api/routes');
 
 app.use(morgan('common'));
 
 app.use(express.json()) // body parser: json
 app.use(express.urlencoded({ extended: true })); // body prser: formdata
 
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname,'src', 'views'));
 app.set('view engine', 'ejs');
 
 app.use(express.static('public'));

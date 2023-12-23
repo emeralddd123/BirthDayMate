@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Birthday Reminder</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+            text-align: center;
+        }
+
+        .container {
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            margin: 20px auto;
+            width: 80%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            color: #666;
+        }
+
+        .upcoming-birthdays {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #3498db;
+            color: #fff;
+            border-radius: 5px;
+        }
+
+        .logout-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #e74c3c;
+            border-radius: 5px;
+            margin-top: 20px;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout-button:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Birthday Reminder!</h1>
+        <p>Here's what's happening:</p>
+
+        <div class="upcoming-birthdays">
+            <h2>Upcoming Birthdays</h2>
+            <!-- Insert dynamic content here (e.g., upcoming birthdays from database) -->
+            <p>No upcoming birthdays</p>
+        </div>
+
+        <a href="/logout" class="logout-button">Logout</a>
+    </div>
+</body>
+</html>
